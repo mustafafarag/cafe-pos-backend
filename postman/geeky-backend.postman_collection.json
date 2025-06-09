@@ -1,0 +1,2075 @@
+{
+	"info": {
+		"_postman_id": "9bed2561-80a8-48d8-8822-4dc328904fe3",
+		"name": "geeky-backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42565287"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Create a User (Cashier or Waiter)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNzQ5MzgzNjA0LCJleHAiOjE3NDk2NDI4MDR9.OyiwDs-j82v_KnvvMFsC_SHCzusYBxCEw9vNLpIR87Y",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Lily Waiter\",\n    \"email\": \"lily.waiter@example.com\",\n    \"password\": \"LilySecurePass789\",\n    \"role\": \"waiter\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/create-user",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"create-user"
+							]
+						},
+						"description": "This endpoint allows the manager to create a new user in the system with a role of either **cashier** or **waiter**.\n\n### 🔐 Access Control\n\n- Only users who are **authenticated** **and verified** with the `manager` role can access this endpoint.\n    \n\n#### Allowed Roles\n\n- `cashier`\n    \n- `waiter`"
+					},
+					"response": [
+						{
+							"name": "✅ 201 – User Created Successfully (waiter)",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Lily Waiter\",\n    \"email\": \"lily.waiter@example.com\",\n    \"password\": \"LilySecurePass789\",\n    \"role\": \"waiter\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/auth/create-user",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"create-user"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "55"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"37-DDCq1pkENiSQjyveY8seYtOJu2w\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 08 Jun 2025 11:56:31 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"User created and verification email sent.\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Verify User Account",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/auth/verify/{{verificationToken}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"verify",
+								"{{verificationToken}}"
+							]
+						},
+						"description": "This endpoint is used to verify a newly registered user account using a one-time **verification token**.\n\n#### 🔐 Access\n\n- **No authentication** required (public endpoint).\n    \n- Only valid and unexpired verification tokens are accepted.\n    \n\n#### 🔄 URL Parameters\n\n- `verificationToken` — a unique token generated during registration and sent to the user's email."
+					},
+					"response": [
+						{
+							"name": "✅ 200 - User Verified",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/auth/verify/{{verificationToken}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"verify",
+										"{{verificationToken}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "42"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"2a-IrpIlAfno9NfJ9YMtkPB3QXrwCg\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 08 Jun 2025 11:50:38 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Email verified successfully.\"\n}"
+						}
+					]
+				},
+				{
+					"name": "User Login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"manager@example.com\",\n    \"password\": \"12345678\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						},
+						"description": "This endpoint allows a user (e.g., admin, cashier, or waiter) to log into the system using their registered email and password.\n\n⚠️ Verification Requirement\n\nOnly users whose accounts have been **verified** (e.g., via email confirmation) are allowed to log in.  \nUnverified users will receive an error response and cannot access protected endpoints."
+					},
+					"response": [
+						{
+							"name": "✅ 200 - User Login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"manager@example.com\",\n    \"password\": \"12345678\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/auth/login",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "173"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"ad-mdB6Kmd52L0YQZhLXTPEAr0P704\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 08 Jun 2025 11:53:24 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNzQ5MzgzNjA0LCJleHAiOjE3NDk2NDI4MDR9.OyiwDs-j82v_KnvvMFsC_SHCzusYBxCEw9vNLpIR87Y\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Request Password Reset",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"lily.waiter@example.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/forgot",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"forgot"
+							]
+						},
+						"description": "This endpoint allows users to initiate a password reset process by providing their registered email address.\n\nIf the email exists in the system and the user is verified, a **password reset link conatins a token** will be sent to that email.\n\n---\n\n### ⚠️ Verification Requirement\n\nOnly users with a **verified account** are eligible to request a password reset.  \nUnverified users will receive an appropriate error message."
+					},
+					"response": [
+						{
+							"name": "✅ 200 – Reset Email Sent",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"lily.waiter@example.com\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/auth/forgot",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"forgot"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "30"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1e-oP150MB8Ndn8hNF5aftUabJkzXA\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 08 Jun 2025 12:10:07 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Reset email sent\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Reset Password",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"password\": \"NewPass789\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/reset/{{resetToken}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"reset",
+								"{{resetToken}}"
+							]
+						},
+						"description": "### 🔑 Reset Password\n\nThis endpoint allows users to **reset their password** using a valid reset token that was sent to their email.\n\nIt is the second step in the \"Forgot Password\" flow.\n\n✅ Requirements  \nresetToken: Must be a valid, non-expired token associated with the user's email.\n\n### 🔄 URL Parameters\n\n- `{{restToken}}` — One-time token sent to the user's email, required to reset the password."
+					},
+					"response": [
+						{
+							"name": "✅ 200 Password Reset Successfully",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"password\": \"NewPass789\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/auth/reset/{{resetToken}}",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"auth",
+										"reset",
+										"{{resetToken}}"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "41"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"29-JLWAnLrf6qmJkXqaEuCQpWt9O0c\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 08 Jun 2025 12:16:28 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Password reset successfully\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Get All Users (Mangers Only)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNzQ5MzgzNjA0LCJleHAiOjE3NDk2NDI4MDR9.OyiwDs-j82v_KnvvMFsC_SHCzusYBxCEw9vNLpIR87Y",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users"
+							]
+						},
+						"description": "### 👥 Get All Users (Managers Only)\n\nThis endpoint retrieves a list of all registered users in the system.\n\n---\n\n### 🔐 Access Control\n\n- Only users who are **authenticated** **and verified** with the `manager` role can access this endpoint."
+					},
+					"response": [
+						{
+							"name": "✅ 200 Users Retrieved",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "565"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"235-nhWCBuFQlPwuk52fJ5sdxXX+DZc\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 08 Jun 2025 23:05:00 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"users\": [\n        {\n            \"id\": 17,\n            \"name\": \"Initial Manager\",\n            \"email\": \"manager@example.com\",\n            \"role\": \"manager\",\n            \"isVerified\": true,\n            \"createdAt\": \"2025-06-08T11:47:32.064Z\"\n        },\n        {\n            \"id\": 18,\n            \"name\": \"Lily Waiter\",\n            \"email\": \"lily.waiter@example.com\",\n            \"role\": \"waiter\",\n            \"isVerified\": true,\n            \"createdAt\": \"2025-06-08T11:56:26.301Z\"\n        },\n        {\n            \"id\": 19,\n            \"name\": \"John Smith\",\n            \"email\": \"john.smith@example.com\",\n            \"role\": \"cashier\",\n            \"isVerified\": false,\n            \"createdAt\": \"2025-06-08T23:03:10.119Z\"\n        },\n        {\n            \"id\": 20,\n            \"name\": \"Sarah Brown\",\n            \"email\": \"sarah.brown@example.com\",\n            \"role\": \"waiter\",\n            \"isVerified\": false,\n            \"createdAt\": \"2025-06-08T23:03:36.973Z\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Get A User By ID (Mangers Only)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNzQ5MzgzNjA0LCJleHAiOjE3NDk2NDI4MDR9.OyiwDs-j82v_KnvvMFsC_SHCzusYBxCEw9vNLpIR87Y",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/20",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"20"
+							]
+						},
+						"description": "### 👤 Get a User by ID (Managers Only)\n\nThis endpoint allows to retrieve the details of a specific user by their ID.\n\n---\n\n### 🔐 Access Control\n\n- Only users who are **authenticated** **and verified** with the `manager` role can access this endpoint."
+					},
+					"response": [
+						{
+							"name": "✅ 200 User Found by ID",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users/20",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"20"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "147"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"93-YbCgsxg9yei3hHVlRh+r5m0ayx0\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 08 Jun 2025 23:07:57 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"user\": {\n        \"id\": 20,\n        \"name\": \"Sarah Brown\",\n        \"email\": \"sarah.brown@example.com\",\n        \"role\": \"waiter\",\n        \"isVerified\": false,\n        \"createdAt\": \"2025-06-08T23:03:36.973Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Update A User By ID (Mangers Only)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNzQ5MzgzNjA0LCJleHAiOjE3NDk2NDI4MDR9.OyiwDs-j82v_KnvvMFsC_SHCzusYBxCEw9vNLpIR87Y",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Sara Brown\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/users/20",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"20"
+							]
+						},
+						"description": "### ✏️ Update a User by ID (Managers Only)\n\nThis endpoint allows to update the details of an existing user by their ID.\n\n---\n\n### 🔐 Access Control\n\n- Only users who are **authenticated** **and verified** with the `manager` role can access this endpoint."
+					},
+					"response": [
+						{
+							"name": "✅ 200 User Updated Successfully",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"Sara Brown\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/users/20",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"20"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "145"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"91-YmALXn40Se+hKmh7Zy2X88mWanA\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 08 Jun 2025 23:10:06 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"User updated successfully\",\n    \"user\": {\n        \"id\": 20,\n        \"name\": \"Sara Brown\",\n        \"email\": \"sarah.brown@example.com\",\n        \"role\": \"waiter\",\n        \"isVerified\": false\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete A User By ID (Mangers Only)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNzQ5MzgzNjA0LCJleHAiOjE3NDk2NDI4MDR9.OyiwDs-j82v_KnvvMFsC_SHCzusYBxCEw9vNLpIR87Y",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/users/18",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"users",
+								"18"
+							]
+						},
+						"description": "### 🗑️ Delete a User by ID (Managers Only)\n\nThis endpoint allows to permanently delete a user account by its ID.\n\n---\n\n### 🔐 Access Control\n\n- Only users who are **authenticated** **and verified** with the `manager` role can access this endpoint."
+					},
+					"response": [
+						{
+							"name": "✅ 200 - User Deleted Successfully",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/users/18",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"users",
+										"18"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "39"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"27-27o4zzUjhHNmthTJyia4gBCjpos\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 08 Jun 2025 23:12:56 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"User deleted successfully\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Items",
+			"item": [
+				{
+					"name": "Create Items (Mangers Only)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNzQ5MzgzNjA0LCJleHAiOjE3NDk2NDI4MDR9.OyiwDs-j82v_KnvvMFsC_SHCzusYBxCEw9vNLpIR87Y",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\n  {\n    \"sku\": \"EXP001\",\n    \"name\": \"Expired Yogurt\",\n    \"description\": \"Expired dairy product\",\n    \"price\": 9.99,\n    \"category\": \"dairy\",\n    \"expiryDate\": \"2025-06-08\",\n    \"stockQuantity\": 12\n  },\n  {\n    \"sku\": \"TODAY001\",\n    \"name\": \"Fresh Bread\",\n    \"description\": \"Expires today\",\n    \"price\": 4.5,\n    \"category\": \"bakery\",\n    \"expiryDate\": \"2025-06-09\",\n    \"stockQuantity\": 20\n  },\n  {\n    \"sku\": \"FIVE001\",\n    \"name\": \"Fruit Juice\",\n    \"description\": \"Should trigger 5-day-before warning\",\n    \"price\": 6.0,\n    \"category\": \"beverage\",\n    \"expiryDate\": \"2025-06-14\",\n    \"stockQuantity\": 15\n  },\n  {\n    \"sku\": \"THREE001\",\n    \"name\": \"Chocolate Milk\",\n    \"description\": \"Expires in 3 days\",\n    \"price\": 7.5,\n    \"category\": \"dairy\",\n    \"expiryDate\": \"2025-06-12\",\n    \"stockQuantity\": 8\n  },\n  {\n    \"sku\": \"SAFE001\",\n    \"name\": \"Canned Beans\",\n    \"description\": \"Long shelf life\",\n    \"price\": 3.25,\n    \"category\": \"canned\",\n    \"expiryDate\": \"2025-08-01\",\n    \"stockQuantity\": 100\n  },\n  {\n    \"sku\": \"EXP002\",\n    \"name\": \"Old Cheese\",\n    \"description\": \"Expired cheese product\",\n    \"price\": 12.75,\n    \"category\": \"dairy\",\n    \"expiryDate\": \"2025-06-05\",\n    \"stockQuantity\": 7\n  },\n  {\n    \"sku\": \"TODAY002\",\n    \"name\": \"Soft Drink\",\n    \"description\": \"Expires today\",\n    \"price\": 2.5,\n    \"category\": \"beverage\",\n    \"expiryDate\": \"2025-06-09\",\n    \"stockQuantity\": 30\n  },\n  {\n    \"sku\": \"FIVE002\",\n    \"name\": \"Greek Yogurt\",\n    \"description\": \"Should trigger 5-day email\",\n    \"price\": 8.5,\n    \"category\": \"dairy\",\n    \"expiryDate\": \"2025-06-14\",\n    \"stockQuantity\": 18\n  },\n  {\n    \"sku\": \"SAFE002\",\n    \"name\": \"Energy Bar\",\n    \"description\": \"Expires in 30 days\",\n    \"price\": 5.5,\n    \"category\": \"snack\",\n    \"expiryDate\": \"2025-07-09\",\n    \"stockQuantity\": 50\n  },\n  {\n    \"sku\": \"FUTURE001\",\n    \"name\": \"Bottled Water\",\n    \"description\": \"Very long shelf life\",\n    \"price\": 1.25,\n    \"category\": \"beverage\",\n    \"expiryDate\": \"2026-01-01\",\n    \"stockQuantity\": 200\n  }\n]\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/items",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"items"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "✅ 201 - Items Created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "[\n  {\n    \"sku\": \"EXP001\",\n    \"name\": \"Expired Yogurt\",\n    \"description\": \"Expired dairy product\",\n    \"price\": 9.99,\n    \"category\": \"dairy\",\n    \"expiryDate\": \"2025-06-08\",\n    \"stockQuantity\": 12\n  },\n  {\n    \"sku\": \"TODAY001\",\n    \"name\": \"Fresh Bread\",\n    \"description\": \"Expires today\",\n    \"price\": 4.5,\n    \"category\": \"bakery\",\n    \"expiryDate\": \"2025-06-09\",\n    \"stockQuantity\": 20\n  },\n  {\n    \"sku\": \"FIVE001\",\n    \"name\": \"Fruit Juice\",\n    \"description\": \"Should trigger 5-day-before warning\",\n    \"price\": 6.0,\n    \"category\": \"beverage\",\n    \"expiryDate\": \"2025-06-14\",\n    \"stockQuantity\": 15\n  },\n  {\n    \"sku\": \"THREE001\",\n    \"name\": \"Chocolate Milk\",\n    \"description\": \"Expires in 3 days\",\n    \"price\": 7.5,\n    \"category\": \"dairy\",\n    \"expiryDate\": \"2025-06-12\",\n    \"stockQuantity\": 8\n  },\n  {\n    \"sku\": \"SAFE001\",\n    \"name\": \"Canned Beans\",\n    \"description\": \"Long shelf life\",\n    \"price\": 3.25,\n    \"category\": \"canned\",\n    \"expiryDate\": \"2025-08-01\",\n    \"stockQuantity\": 100\n  },\n  {\n    \"sku\": \"EXP002\",\n    \"name\": \"Old Cheese\",\n    \"description\": \"Expired cheese product\",\n    \"price\": 12.75,\n    \"category\": \"dairy\",\n    \"expiryDate\": \"2025-06-05\",\n    \"stockQuantity\": 7\n  },\n  {\n    \"sku\": \"TODAY002\",\n    \"name\": \"Soft Drink\",\n    \"description\": \"Expires today\",\n    \"price\": 2.5,\n    \"category\": \"beverage\",\n    \"expiryDate\": \"2025-06-09\",\n    \"stockQuantity\": 30\n  },\n  {\n    \"sku\": \"FIVE002\",\n    \"name\": \"Greek Yogurt\",\n    \"description\": \"Should trigger 5-day email\",\n    \"price\": 8.5,\n    \"category\": \"dairy\",\n    \"expiryDate\": \"2025-06-14\",\n    \"stockQuantity\": 18\n  },\n  {\n    \"sku\": \"SAFE002\",\n    \"name\": \"Energy Bar\",\n    \"description\": \"Expires in 30 days\",\n    \"price\": 5.5,\n    \"category\": \"snack\",\n    \"expiryDate\": \"2025-07-09\",\n    \"stockQuantity\": 50\n  },\n  {\n    \"sku\": \"FUTURE001\",\n    \"name\": \"Bottled Water\",\n    \"description\": \"Very long shelf life\",\n    \"price\": 1.25,\n    \"category\": \"beverage\",\n    \"expiryDate\": \"2026-01-01\",\n    \"stockQuantity\": 200\n  }\n]\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/items",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"items"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "2545"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"9f1-w2Xs5jLnlXEPROkO/Wbd2X6vptM\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 09 Jun 2025 09:31:01 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 29,\n        \"sku\": \"EXP001\",\n        \"name\": \"Expired Yogurt\",\n        \"description\": \"Expired dairy product\",\n        \"price\": 9.99,\n        \"category\": \"dairy\",\n        \"expiryDate\": \"2025-06-08T00:00:00.000Z\",\n        \"stockQuantity\": 12,\n        \"createdAt\": \"2025-06-09T09:31:00.976Z\",\n        \"updatedAt\": \"2025-06-09T09:31:00.976Z\"\n    },\n    {\n        \"id\": 30,\n        \"sku\": \"TODAY001\",\n        \"name\": \"Fresh Bread\",\n        \"description\": \"Expires today\",\n        \"price\": 4.5,\n        \"category\": \"bakery\",\n        \"expiryDate\": \"2025-06-09T00:00:00.000Z\",\n        \"stockQuantity\": 20,\n        \"createdAt\": \"2025-06-09T09:31:00.976Z\",\n        \"updatedAt\": \"2025-06-09T09:31:00.976Z\"\n    },\n    {\n        \"id\": 31,\n        \"sku\": \"FIVE001\",\n        \"name\": \"Fruit Juice\",\n        \"description\": \"Should trigger 5-day-before warning\",\n        \"price\": 6,\n        \"category\": \"beverage\",\n        \"expiryDate\": \"2025-06-14T00:00:00.000Z\",\n        \"stockQuantity\": 15,\n        \"createdAt\": \"2025-06-09T09:31:00.976Z\",\n        \"updatedAt\": \"2025-06-09T09:31:00.976Z\"\n    },\n    {\n        \"id\": 32,\n        \"sku\": \"THREE001\",\n        \"name\": \"Chocolate Milk\",\n        \"description\": \"Expires in 3 days\",\n        \"price\": 7.5,\n        \"category\": \"dairy\",\n        \"expiryDate\": \"2025-06-12T00:00:00.000Z\",\n        \"stockQuantity\": 8,\n        \"createdAt\": \"2025-06-09T09:31:00.976Z\",\n        \"updatedAt\": \"2025-06-09T09:31:00.976Z\"\n    },\n    {\n        \"id\": 33,\n        \"sku\": \"SAFE001\",\n        \"name\": \"Canned Beans\",\n        \"description\": \"Long shelf life\",\n        \"price\": 3.25,\n        \"category\": \"canned\",\n        \"expiryDate\": \"2025-08-01T00:00:00.000Z\",\n        \"stockQuantity\": 100,\n        \"createdAt\": \"2025-06-09T09:31:00.976Z\",\n        \"updatedAt\": \"2025-06-09T09:31:00.976Z\"\n    },\n    {\n        \"id\": 34,\n        \"sku\": \"EXP002\",\n        \"name\": \"Old Cheese\",\n        \"description\": \"Expired cheese product\",\n        \"price\": 12.75,\n        \"category\": \"dairy\",\n        \"expiryDate\": \"2025-06-05T00:00:00.000Z\",\n        \"stockQuantity\": 7,\n        \"createdAt\": \"2025-06-09T09:31:00.976Z\",\n        \"updatedAt\": \"2025-06-09T09:31:00.976Z\"\n    },\n    {\n        \"id\": 35,\n        \"sku\": \"TODAY002\",\n        \"name\": \"Soft Drink\",\n        \"description\": \"Expires today\",\n        \"price\": 2.5,\n        \"category\": \"beverage\",\n        \"expiryDate\": \"2025-06-09T00:00:00.000Z\",\n        \"stockQuantity\": 30,\n        \"createdAt\": \"2025-06-09T09:31:00.976Z\",\n        \"updatedAt\": \"2025-06-09T09:31:00.976Z\"\n    },\n    {\n        \"id\": 36,\n        \"sku\": \"FIVE002\",\n        \"name\": \"Greek Yogurt\",\n        \"description\": \"Should trigger 5-day email\",\n        \"price\": 8.5,\n        \"category\": \"dairy\",\n        \"expiryDate\": \"2025-06-14T00:00:00.000Z\",\n        \"stockQuantity\": 18,\n        \"createdAt\": \"2025-06-09T09:31:00.976Z\",\n        \"updatedAt\": \"2025-06-09T09:31:00.976Z\"\n    },\n    {\n        \"id\": 37,\n        \"sku\": \"SAFE002\",\n        \"name\": \"Energy Bar\",\n        \"description\": \"Expires in 30 days\",\n        \"price\": 5.5,\n        \"category\": \"snack\",\n        \"expiryDate\": \"2025-07-09T00:00:00.000Z\",\n        \"stockQuantity\": 50,\n        \"createdAt\": \"2025-06-09T09:31:00.976Z\",\n        \"updatedAt\": \"2025-06-09T09:31:00.976Z\"\n    },\n    {\n        \"id\": 38,\n        \"sku\": \"FUTURE001\",\n        \"name\": \"Bottled Water\",\n        \"description\": \"Very long shelf life\",\n        \"price\": 1.25,\n        \"category\": \"beverage\",\n        \"expiryDate\": \"2026-01-01T00:00:00.000Z\",\n        \"stockQuantity\": 200,\n        \"createdAt\": \"2025-06-09T09:31:00.976Z\",\n        \"updatedAt\": \"2025-06-09T09:31:00.976Z\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Get Items/filters/sorts (Mangers Only)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjEsInJvbGUiOiJ3YWl0ZXIiLCJpYXQiOjE3NDk0NjE5NTYsImV4cCI6MTc0OTcyMTE1Nn0.AUmGgFs6ZFdEaIeKDEiSXPloFXNsIcJoyD3qFQvhoTU",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/items",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"items"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "✅ 200 Get All Items (Mangers))",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/items",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"items"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "2545"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"9f1-w2Xs5jLnlXEPROkO/Wbd2X6vptM\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 09 Jun 2025 09:34:36 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 29,\n        \"sku\": \"EXP001\",\n        \"name\": \"Expired Yogurt\",\n        \"description\": \"Expired dairy product\",\n        \"price\": 9.99,\n        \"category\": \"dairy\",\n        \"expiryDate\": \"2025-06-08T00:00:00.000Z\",\n        \"stockQuantity\": 12,\n        \"createdAt\": \"2025-06-09T09:31:00.976Z\",\n        \"updatedAt\": \"2025-06-09T09:31:00.976Z\"\n    },\n    {\n        \"id\": 30,\n        \"sku\": \"TODAY001\",\n        \"name\": \"Fresh Bread\",\n        \"description\": \"Expires today\",\n        \"price\": 4.5,\n        \"category\": \"bakery\",\n        \"expiryDate\": \"2025-06-09T00:00:00.000Z\",\n        \"stockQuantity\": 20,\n        \"createdAt\": \"2025-06-09T09:31:00.976Z\",\n        \"updatedAt\": \"2025-06-09T09:31:00.976Z\"\n    },\n    {\n        \"id\": 31,\n        \"sku\": \"FIVE001\",\n        \"name\": \"Fruit Juice\",\n        \"description\": \"Should trigger 5-day-before warning\",\n        \"price\": 6,\n        \"category\": \"beverage\",\n        \"expiryDate\": \"2025-06-14T00:00:00.000Z\",\n        \"stockQuantity\": 15,\n        \"createdAt\": \"2025-06-09T09:31:00.976Z\",\n        \"updatedAt\": \"2025-06-09T09:31:00.976Z\"\n    },\n    {\n        \"id\": 32,\n        \"sku\": \"THREE001\",\n        \"name\": \"Chocolate Milk\",\n        \"description\": \"Expires in 3 days\",\n        \"price\": 7.5,\n        \"category\": \"dairy\",\n        \"expiryDate\": \"2025-06-12T00:00:00.000Z\",\n        \"stockQuantity\": 8,\n        \"createdAt\": \"2025-06-09T09:31:00.976Z\",\n        \"updatedAt\": \"2025-06-09T09:31:00.976Z\"\n    },\n    {\n        \"id\": 33,\n        \"sku\": \"SAFE001\",\n        \"name\": \"Canned Beans\",\n        \"description\": \"Long shelf life\",\n        \"price\": 3.25,\n        \"category\": \"canned\",\n        \"expiryDate\": \"2025-08-01T00:00:00.000Z\",\n        \"stockQuantity\": 100,\n        \"createdAt\": \"2025-06-09T09:31:00.976Z\",\n        \"updatedAt\": \"2025-06-09T09:31:00.976Z\"\n    },\n    {\n        \"id\": 34,\n        \"sku\": \"EXP002\",\n        \"name\": \"Old Cheese\",\n        \"description\": \"Expired cheese product\",\n        \"price\": 12.75,\n        \"category\": \"dairy\",\n        \"expiryDate\": \"2025-06-05T00:00:00.000Z\",\n        \"stockQuantity\": 7,\n        \"createdAt\": \"2025-06-09T09:31:00.976Z\",\n        \"updatedAt\": \"2025-06-09T09:31:00.976Z\"\n    },\n    {\n        \"id\": 35,\n        \"sku\": \"TODAY002\",\n        \"name\": \"Soft Drink\",\n        \"description\": \"Expires today\",\n        \"price\": 2.5,\n        \"category\": \"beverage\",\n        \"expiryDate\": \"2025-06-09T00:00:00.000Z\",\n        \"stockQuantity\": 30,\n        \"createdAt\": \"2025-06-09T09:31:00.976Z\",\n        \"updatedAt\": \"2025-06-09T09:31:00.976Z\"\n    },\n    {\n        \"id\": 36,\n        \"sku\": \"FIVE002\",\n        \"name\": \"Greek Yogurt\",\n        \"description\": \"Should trigger 5-day email\",\n        \"price\": 8.5,\n        \"category\": \"dairy\",\n        \"expiryDate\": \"2025-06-14T00:00:00.000Z\",\n        \"stockQuantity\": 18,\n        \"createdAt\": \"2025-06-09T09:31:00.976Z\",\n        \"updatedAt\": \"2025-06-09T09:31:00.976Z\"\n    },\n    {\n        \"id\": 37,\n        \"sku\": \"SAFE002\",\n        \"name\": \"Energy Bar\",\n        \"description\": \"Expires in 30 days\",\n        \"price\": 5.5,\n        \"category\": \"snack\",\n        \"expiryDate\": \"2025-07-09T00:00:00.000Z\",\n        \"stockQuantity\": 50,\n        \"createdAt\": \"2025-06-09T09:31:00.976Z\",\n        \"updatedAt\": \"2025-06-09T09:31:00.976Z\"\n    },\n    {\n        \"id\": 38,\n        \"sku\": \"FUTURE001\",\n        \"name\": \"Bottled Water\",\n        \"description\": \"Very long shelf life\",\n        \"price\": 1.25,\n        \"category\": \"beverage\",\n        \"expiryDate\": \"2026-01-01T00:00:00.000Z\",\n        \"stockQuantity\": 200,\n        \"createdAt\": \"2025-06-09T09:31:00.976Z\",\n        \"updatedAt\": \"2025-06-09T09:31:00.976Z\"\n    }\n]"
+						},
+						{
+							"name": "✅ 200 Get Only non-expired items by Waiter User",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/items",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"items"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1541"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"605-WKWSjpURjrblP/qBylScZa7hMG8\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 09 Jun 2025 09:40:32 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "[\n    {\n        \"id\": 31,\n        \"sku\": \"FIVE001\",\n        \"name\": \"Fruit Juice\",\n        \"description\": \"Should trigger 5-day-before warning\",\n        \"price\": 6,\n        \"category\": \"beverage\",\n        \"expiryDate\": \"2025-06-14T00:00:00.000Z\",\n        \"stockQuantity\": 15,\n        \"createdAt\": \"2025-06-09T09:31:00.976Z\",\n        \"updatedAt\": \"2025-06-09T09:31:00.976Z\"\n    },\n    {\n        \"id\": 32,\n        \"sku\": \"THREE001\",\n        \"name\": \"Chocolate Milk\",\n        \"description\": \"Expires in 3 days\",\n        \"price\": 7.5,\n        \"category\": \"dairy\",\n        \"expiryDate\": \"2025-06-12T00:00:00.000Z\",\n        \"stockQuantity\": 8,\n        \"createdAt\": \"2025-06-09T09:31:00.976Z\",\n        \"updatedAt\": \"2025-06-09T09:31:00.976Z\"\n    },\n    {\n        \"id\": 33,\n        \"sku\": \"SAFE001\",\n        \"name\": \"Canned Beans\",\n        \"description\": \"Long shelf life\",\n        \"price\": 3.25,\n        \"category\": \"canned\",\n        \"expiryDate\": \"2025-08-01T00:00:00.000Z\",\n        \"stockQuantity\": 100,\n        \"createdAt\": \"2025-06-09T09:31:00.976Z\",\n        \"updatedAt\": \"2025-06-09T09:31:00.976Z\"\n    },\n    {\n        \"id\": 36,\n        \"sku\": \"FIVE002\",\n        \"name\": \"Greek Yogurt\",\n        \"description\": \"Should trigger 5-day email\",\n        \"price\": 8.5,\n        \"category\": \"dairy\",\n        \"expiryDate\": \"2025-06-14T00:00:00.000Z\",\n        \"stockQuantity\": 18,\n        \"createdAt\": \"2025-06-09T09:31:00.976Z\",\n        \"updatedAt\": \"2025-06-09T09:31:00.976Z\"\n    },\n    {\n        \"id\": 37,\n        \"sku\": \"SAFE002\",\n        \"name\": \"Energy Bar\",\n        \"description\": \"Expires in 30 days\",\n        \"price\": 5.5,\n        \"category\": \"snack\",\n        \"expiryDate\": \"2025-07-09T00:00:00.000Z\",\n        \"stockQuantity\": 50,\n        \"createdAt\": \"2025-06-09T09:31:00.976Z\",\n        \"updatedAt\": \"2025-06-09T09:31:00.976Z\"\n    },\n    {\n        \"id\": 38,\n        \"sku\": \"FUTURE001\",\n        \"name\": \"Bottled Water\",\n        \"description\": \"Very long shelf life\",\n        \"price\": 1.25,\n        \"category\": \"beverage\",\n        \"expiryDate\": \"2026-01-01T00:00:00.000Z\",\n        \"stockQuantity\": 200,\n        \"createdAt\": \"2025-06-09T09:31:00.976Z\",\n        \"updatedAt\": \"2025-06-09T09:31:00.976Z\"\n    }\n]"
+						}
+					]
+				},
+				{
+					"name": "Update an Item (Mangers Only)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNzQ5MzgzNjA0LCJleHAiOjE3NDk2NDI4MDR9.OyiwDs-j82v_KnvvMFsC_SHCzusYBxCEw9vNLpIR87Y",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "  {\n    \"stockQuantity\": 20\n  }\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/items/38",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"items",
+								"38"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "✅ 200 Item updated",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "  {\n    \"stockQuantity\": 20\n  }\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/items/38",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"items",
+										"38"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "306"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"132-4X8AMxEZQJT23M3Tn1Tx3Kt6ITs\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 09 Jun 2025 09:48:51 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Item updated successfully\",\n    \"item\": {\n        \"id\": 38,\n        \"sku\": \"FUTURE001\",\n        \"name\": \"Bottled Water\",\n        \"description\": \"Very long shelf life\",\n        \"price\": 1.25,\n        \"category\": \"beverage\",\n        \"expiryDate\": \"2026-01-01T00:00:00.000Z\",\n        \"stockQuantity\": 20,\n        \"createdAt\": \"2025-06-09T09:31:00.976Z\",\n        \"updatedAt\": \"2025-06-09T09:48:51.584Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete an Item (Mangers Only)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNzQ5MzgzNjA0LCJleHAiOjE3NDk2NDI4MDR9.OyiwDs-j82v_KnvvMFsC_SHCzusYBxCEw9vNLpIR87Y",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/items/37",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"items",
+								"37"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "✅ 200 Item Deleted",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/items/37",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"items",
+										"37"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "26"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1a-XGLLoH+vBCql3HTO7bjujBPplDg\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 09 Jun 2025 09:50:49 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Item deleted\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Import Items as CSV File (Managers Only)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNzQ5MzgzNjA0LCJleHAiOjE3NDk2NDI4MDR9.OyiwDs-j82v_KnvvMFsC_SHCzusYBxCEw9vNLpIR87Y",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/home/mustafa/Desktop/geekyair-backend/test-data/items.csv"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/items/import",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"items",
+								"import"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "✅ 200 CSV imported",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "file",
+											"type": "file",
+											"src": "/home/mustafa/Desktop/geekyair-backend/test-data/items.csv"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{baseUrl}}/items/import",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"items",
+										"import"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": "",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "61"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3d-1kYw7Lga1ujhllz0okndGGj0qm4\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 09 Jun 2025 09:52:52 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"✅ CSV import complete\",\n    \"created\": 2,\n    \"updated\": 0\n}"
+						}
+					]
+				},
+				{
+					"name": "Export Items as CSV File (Managers Only)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNzQ5MzgzNjA0LCJleHAiOjE3NDk2NDI4MDR9.OyiwDs-j82v_KnvvMFsC_SHCzusYBxCEw9vNLpIR87Y",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/items/export",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"items",
+								"export"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "✅ 200 Items Exported as CSV",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/items/export",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"items",
+										"export"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/csv; charset=utf-8"
+								},
+								{
+									"key": "Content-Disposition",
+									"value": "attachment; filename=\"items.csv\""
+								},
+								{
+									"key": "Content-Length",
+									"value": "1053"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"41d-xtPk2Zvn3Fk30k2gwYQXR9STi2U\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 09 Jun 2025 09:54:02 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "\"sku\",\"name\",\"description\",\"price\",\"category\",\"expiryDate\",\"stockQuantity\"\n\"EXP001\",\"Expired Yogurt\",\"Expired dairy product\",9.99,\"dairy\",\"2025-06-08T00:00:00.000Z\",12\n\"TODAY001\",\"Fresh Bread\",\"Expires today\",4.5,\"bakery\",\"2025-06-09T00:00:00.000Z\",20\n\"FIVE001\",\"Fruit Juice\",\"Should trigger 5-day-before warning\",6,\"beverage\",\"2025-06-14T00:00:00.000Z\",15\n\"THREE001\",\"Chocolate Milk\",\"Expires in 3 days\",7.5,\"dairy\",\"2025-06-12T00:00:00.000Z\",8\n\"SAFE001\",\"Canned Beans\",\"Long shelf life\",3.25,\"canned\",\"2025-08-01T00:00:00.000Z\",100\n\"EXP002\",\"Old Cheese\",\"Expired cheese product\",12.75,\"dairy\",\"2025-06-05T00:00:00.000Z\",7\n\"TODAY002\",\"Soft Drink\",\"Expires today\",2.5,\"beverage\",\"2025-06-09T00:00:00.000Z\",30\n\"FIVE002\",\"Greek Yogurt\",\"Should trigger 5-day email\",8.5,\"dairy\",\"2025-06-14T00:00:00.000Z\",18\n\"FUTURE001\",\"Bottled Water\",\"Very long shelf life\",1.25,\"beverage\",\"2026-01-01T00:00:00.000Z\",20\n\"A123\",\"Milk\",\"Full cream milk\",18.5,\"dairy\",\"2025-06-08T00:00:00.000Z\",20\n\"B456\",\"Bread\",\"Whole grain bread\",12,\"bakery\",\"2025-06-10T00:00:00.000Z\",30"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Orders",
+			"item": [
+				{
+					"name": "Create an Order (Cashier)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjIsInJvbGUiOiJjYXNoaWVyIiwiaWF0IjoxNzQ5NDY3MzI1LCJleHAiOjE3NDk3MjY1MjV9.-yZcW0iupNYxX-9lr28BQ7YFq5hqJS8GwMW-lEscfo0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"items\": [\n        {\n            \"itemId\": 48,\n            \"quantity\": 2\n        },\n        {\n            \"itemId\": 49,\n            \"quantity\": 1\n        },\n        {\n            \"itemId\": 50,\n            \"quantity\": 1\n        }\n    ],\n    \"waiterId\": 21\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/orders",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "🔴 400 Item Expired Can't Add to Order",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"items\": [\n    {\n      \"itemId\": 45,\n      \"quantity\": 2\n    },\n    {\n      \"itemId\": 47,\n      \"quantity\": 1\n    }\n    ],\n  \"waiterId\": 21\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/orders",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"orders"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "62"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3e-wH/2H+wU9J+YuPw9NHXxGizSZC8\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 09 Jun 2025 11:10:53 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Item \\\"Soft Drink\\\" is expired and cannot be added\"\n}"
+						},
+						{
+							"name": "✅  201 Order Created",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"items\": [\n    {\n      \"itemId\": 45,\n      \"quantity\": 2\n    },\n    {\n      \"itemId\": 49,\n      \"quantity\": 1\n    }\n    ],\n  \"waiterId\": 21\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/orders",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"orders"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "58"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3a-XfjP1HZVqXH+kH4lA9P2j2vTGME\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 09 Jun 2025 11:12:37 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"✅ Order created\",\n    \"orderId\": 1,\n    \"totalCost\": 12\n}"
+						}
+					]
+				},
+				{
+					"name": "Add an Item to an Existing Order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjIsInJvbGUiOiJjYXNoaWVyIiwiaWF0IjoxNzQ5NDY3MzI1LCJleHAiOjE3NDk3MjY1MjV9.-yZcW0iupNYxX-9lr28BQ7YFq5hqJS8GwMW-lEscfo0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"itemId\": 43,\n  \"quantity\": 3\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/orders/1/add-item",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders",
+								"1",
+								"add-item"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "✅ 201 Item Added to an Existing Order",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"itemId\": 43,\n  \"quantity\": 3\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/orders/1/add-item",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"orders",
+										"1",
+										"add-item"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "63"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3f-PRJM7j15oKeI6AyC/rjnJ2f+vvY\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 09 Jun 2025 11:16:20 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"✅ Item Fruit Juice added to order\",\n    \"newTotal\": 30\n}"
+						}
+					]
+				},
+				{
+					"name": "Remove Non-Expired Item from Order",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjIsInJvbGUiOiJjYXNoaWVyIiwiaWF0IjoxNzQ5NDY3MzI1LCJleHAiOjE3NDk3MjY1MjV9.-yZcW0iupNYxX-9lr28BQ7YFq5hqJS8GwMW-lEscfo0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/orders/1/items/49",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders",
+								"1",
+								"items",
+								"49"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "✅ 200 Item removed from order\"",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/orders/1/items/49",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"orders",
+										"1",
+										"items",
+										"49"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "76"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"4c-uuwg8steSFDEvSZ0E/42Go2NC1o\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 09 Jun 2025 11:19:26 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"✅ Item removed from order\",\n    \"newTotal\": 24.5,\n    \"remainingItems\": 2\n}"
+						}
+					]
+				},
+				{
+					"name": "Update Order Status",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MjIsInJvbGUiOiJjYXNoaWVyIiwiaWF0IjoxNzQ5NDY3MzI1LCJleHAiOjE3NDk3MjY1MjV9.-yZcW0iupNYxX-9lr28BQ7YFq5hqJS8GwMW-lEscfo0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"newStatus\": \"complete\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/orders/1/status",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders",
+								"1",
+								"status"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "✅ 200 Order marked as complete",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"newStatus\": \"complete\"\n}\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/orders/1/status",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"orders",
+										"1",
+										"status"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "50"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"32-8eUBs3e/CBVPaTkeuoKQBU0YcDA\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 09 Jun 2025 11:20:56 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Order marked as complete\",\n    \"orderId\": 1\n}"
+						}
+					]
+				},
+				{
+					"name": "Get all Orders (Mangers Only)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNzQ5MzgzNjA0LCJleHAiOjE3NDk2NDI4MDR9.OyiwDs-j82v_KnvvMFsC_SHCzusYBxCEw9vNLpIR87Y",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/orders",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "✅ 200 Get all Orders (Mangers Only)",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/orders",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"orders"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "2682"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"a7a-xluMQu8BkCCAbIJ5k4PrUsCR3BY\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 09 Jun 2025 11:23:31 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"orders\": [\n        {\n            \"id\": 2,\n            \"status\": \"pending\",\n            \"totalCost\": 23.75,\n            \"waiterId\": 21,\n            \"cashierId\": 22,\n            \"createdAt\": \"2025-06-09T11:22:42.366Z\",\n            \"updatedAt\": \"2025-06-09T11:22:42.366Z\",\n            \"cashier\": {\n                \"id\": 22,\n                \"name\": \"Alex Cashier\",\n                \"email\": \"alex.cashier@example.com\"\n            },\n            \"waiter\": {\n                \"id\": 21,\n                \"name\": \"Lily Waiter\",\n                \"email\": \"lily.waiter@example.com\"\n            },\n            \"items\": [\n                {\n                    \"id\": 4,\n                    \"orderId\": 2,\n                    \"itemId\": 48,\n                    \"quantity\": 2,\n                    \"priceSnapshot\": 8.5,\n                    \"createdAt\": \"2025-06-09T11:22:42.371Z\",\n                    \"updatedAt\": \"2025-06-09T11:22:42.371Z\",\n                    \"Item\": {\n                        \"id\": 48,\n                        \"sku\": \"FIVE002\",\n                        \"name\": \"Greek Yogurt\",\n                        \"description\": \"Should trigger 5-day email\",\n                        \"price\": 8.5,\n                        \"category\": \"dairy\",\n                        \"expiryDate\": \"2025-06-14T00:00:00.000Z\",\n                        \"stockQuantity\": 18,\n                        \"createdAt\": \"2025-06-09T11:09:52.916Z\",\n                        \"updatedAt\": \"2025-06-09T11:09:52.916Z\"\n                    }\n                },\n                {\n                    \"id\": 5,\n                    \"orderId\": 2,\n                    \"itemId\": 49,\n                    \"quantity\": 1,\n                    \"priceSnapshot\": 5.5,\n                    \"createdAt\": \"2025-06-09T11:22:42.371Z\",\n                    \"updatedAt\": \"2025-06-09T11:22:42.371Z\",\n                    \"Item\": {\n                        \"id\": 49,\n                        \"sku\": \"SAFE002\",\n                        \"name\": \"Energy Bar\",\n                        \"description\": \"Expires in 30 days\",\n                        \"price\": 5.5,\n                        \"category\": \"snack\",\n                        \"expiryDate\": \"2025-07-09T00:00:00.000Z\",\n                        \"stockQuantity\": 51,\n                        \"createdAt\": \"2025-06-09T11:09:52.916Z\",\n                        \"updatedAt\": \"2025-06-09T11:19:26.412Z\"\n                    }\n                },\n                {\n                    \"id\": 6,\n                    \"orderId\": 2,\n                    \"itemId\": 50,\n                    \"quantity\": 1,\n                    \"priceSnapshot\": 1.25,\n                    \"createdAt\": \"2025-06-09T11:22:42.371Z\",\n                    \"updatedAt\": \"2025-06-09T11:22:42.371Z\",\n                    \"Item\": {\n                        \"id\": 50,\n                        \"sku\": \"FUTURE001\",\n                        \"name\": \"Bottled Water\",\n                        \"description\": \"Very long shelf life\",\n                        \"price\": 1.25,\n                        \"category\": \"beverage\",\n                        \"expiryDate\": \"2026-01-01T00:00:00.000Z\",\n                        \"stockQuantity\": 200,\n                        \"createdAt\": \"2025-06-09T11:09:52.916Z\",\n                        \"updatedAt\": \"2025-06-09T11:09:52.916Z\"\n                    }\n                }\n            ]\n        },\n        {\n            \"id\": 1,\n            \"status\": \"complete\",\n            \"totalCost\": 24.5,\n            \"waiterId\": 21,\n            \"cashierId\": 22,\n            \"createdAt\": \"2025-06-09T11:12:37.913Z\",\n            \"updatedAt\": \"2025-06-09T11:20:56.203Z\",\n            \"cashier\": {\n                \"id\": 22,\n                \"name\": \"Alex Cashier\",\n                \"email\": \"alex.cashier@example.com\"\n            },\n            \"waiter\": {\n                \"id\": 21,\n                \"name\": \"Lily Waiter\",\n                \"email\": \"lily.waiter@example.com\"\n            },\n            \"items\": [\n                {\n                    \"id\": 1,\n                    \"orderId\": 1,\n                    \"itemId\": 45,\n                    \"quantity\": 2,\n                    \"priceSnapshot\": 3.25,\n                    \"createdAt\": \"2025-06-09T11:12:37.921Z\",\n                    \"updatedAt\": \"2025-06-09T11:12:37.921Z\",\n                    \"Item\": {\n                        \"id\": 45,\n                        \"sku\": \"SAFE001\",\n                        \"name\": \"Canned Beans\",\n                        \"description\": \"Long shelf life\",\n                        \"price\": 3.25,\n                        \"category\": \"canned\",\n                        \"expiryDate\": \"2025-08-01T00:00:00.000Z\",\n                        \"stockQuantity\": 98,\n                        \"createdAt\": \"2025-06-09T11:09:52.916Z\",\n                        \"updatedAt\": \"2025-06-09T11:20:56.196Z\"\n                    }\n                },\n                {\n                    \"id\": 3,\n                    \"orderId\": 1,\n                    \"itemId\": 43,\n                    \"quantity\": 3,\n                    \"priceSnapshot\": 6,\n                    \"createdAt\": \"2025-06-09T11:16:20.585Z\",\n                    \"updatedAt\": \"2025-06-09T11:16:20.585Z\",\n                    \"Item\": {\n                        \"id\": 43,\n                        \"sku\": \"FIVE001\",\n                        \"name\": \"Fruit Juice\",\n                        \"description\": \"Should trigger 5-day-before warning\",\n                        \"price\": 6,\n                        \"category\": \"beverage\",\n                        \"expiryDate\": \"2025-06-14T00:00:00.000Z\",\n                        \"stockQuantity\": 12,\n                        \"createdAt\": \"2025-06-09T11:09:52.916Z\",\n                        \"updatedAt\": \"2025-06-09T11:20:56.201Z\"\n                    }\n                }\n            ]\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Cancel an order Only if it's completed  (Mangers Only)",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTcsInJvbGUiOiJtYW5hZ2VyIiwiaWF0IjoxNzQ5MzgzNjA0LCJleHAiOjE3NDk2NDI4MDR9.OyiwDs-j82v_KnvvMFsC_SHCzusYBxCEw9vNLpIR87Y",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/orders/1/cancel",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"orders",
+								"1",
+								"cancel"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "✅ 200 Cancel an order Only if it's completed  (Mangers Only)",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"url": {
+									"raw": "{{baseUrl}}/orders/1/cancel",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"orders",
+										"1",
+										"cancel"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "70"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"46-CYGbT1EOrh4A/hQwZCkY9pJ7g+U\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 09 Jun 2025 11:24:55 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"✅ Order #1 cancelled successfully\",\n    \"status\": \"cancelled\"\n}"
+						}
+					]
+				}
+			]
+		}
+	]
+}
