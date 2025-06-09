@@ -122,7 +122,7 @@ Use Postman to test the endpoints.
 
 ## import the Postman Collection & Environment
 1. Open Postman.
-2. Import `My Environment.postman_environment.json`. 
+2. Import `./postman/geeky-backend.postman_environment.json`. 
 3. Import `./postman/geeky-backend.postman_collection.json`.
 4. Set the active environment to `geeky-backend.postman_environment.json`.
 5. Use the interactive interface to test all endpoints with `{{base_url}}`.
