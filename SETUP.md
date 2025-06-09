@@ -127,7 +127,7 @@ Use Postman to test the endpoints.
 4. Set the active environment to `geeky-backend.postman_environment.json`.
 5. Use the interactive interface to test all endpoints with `{{base_url}}`.
 
-Note: Make sure your local server is running at http://localhost:5000 (or as defined in `base_url`).
+Note: Make sure your local server is running at http://localhost:3000 (or as defined in `base_url`).
 
 
 📘 For full testing instructions, see the [Testing Flow Guide](./TESTING_FLOW.md)
