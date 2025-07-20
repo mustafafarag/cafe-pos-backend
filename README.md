@@ -10,6 +10,24 @@ The full list of completed features and development progress can be found in [ST
 
 ---
 
+---
+
+## 🛠 Tech Stack
+
+CafePOS is built using the following technologies:
+
+| Layer              | Technology                      | Purpose                                      |
+|--------------------|----------------------------------|----------------------------------------------|
+| **Language**       | JavaScript (Node.js)            | Backend logic and API implementation         |
+| **Framework**      | Express.js                      | RESTful API structure and middleware support |
+| **Database**       | PostgreSQL                      | Relational data storage                      |
+| **ORM**            | Sequelize                       | Database modeling, migrations & seeding     |
+| **Auth**           | JSON Web Tokens (JWT)           | Secure user authentication                   |
+| **Containerization** | Docker & Docker Compose      | Environment isolation and service orchestration |
+| **Environment Management** | dotenv                  | Secure configuration via `.env`             |
+| **Task Scripts**   | Sequelize CLI, Custom Seeders   | Automate migrations and test data loading    |
+
+---
 ## 🧾 Project Structure
 
 ```
