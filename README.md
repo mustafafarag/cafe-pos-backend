@@ -13,7 +13,7 @@ The full list of completed features and development progress can be found in [ST
 ## 🧾 Project Structure
 
 ```
-geekyair-backend/
+cafe-pos-backend/
 ├── app.js                      # Main Express server entry point
 ├── config/                     # Sequelize config and other app configurations
 ├── controllers/                # Business logic for each route (e.g., user, item, order)
