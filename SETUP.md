@@ -26,8 +26,8 @@ Regardless of the setup method you choose, ensure the following are available:
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/your-username/geekyair-backend.git
-cd geekyair-backend
+git clone https://github.com/your-username/cafe-pos-backend.git
+cd cafe-pos-backend
 
 # 2. Add your environment variables
 # See the environment variable reference: [Environment Variables](#️-environment-variables)
@@ -72,7 +72,7 @@ docker compose down -v
 
 ```bash
 # 1. Clone the repo
-git clone https://github.com/your-username/geekyair-backend.git
+git clone https://github.com/your-username/cafe-pos-backend.git
 cd geekyair-backend
 
 # 2. Install dependencies
@@ -101,8 +101,8 @@ PORT=5000
 JWT_SECRET=your_jwt_secret_key
 
 # PostgreSQL Database Configuration
-DB_HOST=localhost           # Use 'db' if running via Docker
-DB_NAME=geekyair
+DB_HOST=localhost           
+DB_NAME=dbname              # Use 'cafe-pos-db' if running via Docker
 DB_USERNAME=postgres
 DB_PASSWORD=your_db_password
 
