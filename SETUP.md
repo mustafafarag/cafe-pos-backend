@@ -31,7 +31,7 @@ cd cafe-pos-backend
 
 # 2. Add your environment variables
 # See the environment variable reference: [Environment Variables](#️-environment-variables)
-cp .env.exampl .env
+cp .env.example .env
 # Edit .env to include DB, JWT, and email credentials
 
 # 3. Build and run containers
