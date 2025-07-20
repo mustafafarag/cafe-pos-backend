@@ -1,5 +1,5 @@
 
-# 🧪 Testing Flow for geekyair-backend
+# 🧪 Testing Flow for cafe-pos-backend
 
 This guide explains how to perform the initial steps of the backend system, including manager creation, verification, and authorized access.
 
