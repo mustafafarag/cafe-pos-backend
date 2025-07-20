@@ -1,5 +1,5 @@
 
-# 📦 geekyair-backend
+# 📦 CafePOS – Backend for Café Management
 
 ---
 
