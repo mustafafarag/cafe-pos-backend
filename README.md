@@ -3,9 +3,9 @@
 
 ---
 
-## 📋 Project Progress
+## 📋✅ Project Status
 
-See what has been completed in [STATUS.md](./STATUS.md) 
+The full list of completed features and development progress can be found in [STATUS.md](./STATUS.md) 
 
 
 ---
