@@ -1,7 +1,7 @@
 
 services:
   app:
-    container_name: geekyair-backend
+    container_name: cafe-pos-backend
     build:
       context: .
       dockerfile: Dockerfile
@@ -19,7 +19,7 @@ services:
       - app-network
 
   db:
-    container_name: geekyair-db
+    container_name: cafe-pos-db
     image: postgres:14
     restart: always
     ports:
