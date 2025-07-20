@@ -1,7 +1,7 @@
 
-# ✅ Phase One Submission - Project Progress
+# ✅ CafePOS – Project Progress
 
-This file outlines the features and tasks completed as part of the Phase One submission of the `geekyair-backend` project.
+This file outlines the core features and tasks completed as part of the development of the `cafe-pos-backend` project.
 
 ---
 
@@ -47,7 +47,7 @@ Managers :
 
 
 ## 📦 Item Management via CSV Import/Export
- [x] Managers can import/export items with data (details and stock) via CSV, supporting both creation and updates using a unique identifier (SKU).
+ - [x] Managers can import/export items with data (details and stock) via CSV, supporting both creation and updates using a unique identifier (SKU).
 
 
 
