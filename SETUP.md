@@ -1,6 +1,5 @@
 
-# ⚙️ Local Setup Instructions for geekyair-backend
-
+# ⚙️ Local Setup Instructions for cafe-pos-backend
 This guide walks you through setting up the project locally for testing.
 
 ---
